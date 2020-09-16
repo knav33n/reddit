@@ -3,24 +3,25 @@ import { Form, Formik } from "formik";
 import { Box, Button } from "@chakra-ui/core";
 import Wrapper from "../components/Wrapper";
 import InputField from "../components/InputField";
-import { useRegisterMutation } from "../generated/graphql";
+import { useLoginMutation } from "../generated/graphql";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useRouter } from "next/router";
 
-interface registerProps {}
+interface loginProps {}
 
-const Register: React.FC<registerProps> = ({}) => {
+const Login: React.FC<loginProps> = ({}) => {
   const router = useRouter();
-  const [, register] = useRegisterMutation();
+
+  const [, login] = useLoginMutation();
   return (
     <Wrapper variant="sm">
       <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={async (values, { setErrors }) => {
-          const { data } = await register(values);
-          if (data?.register.errors) {
-            setErrors(toErrorMap(data.register.errors));
-          } else if (data?.register.user) {
+          const { data } = await login({ options: values });
+          if (data?.login.errors) {
+            setErrors(toErrorMap(data.login.errors));
+          } else if (data?.login.user) {
             router.push("/");
           }
         }}
@@ -54,4 +55,5 @@ const Register: React.FC<registerProps> = ({}) => {
     </Wrapper>
   );
 };
-export default Register;
+
+export default Login;
