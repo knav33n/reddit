@@ -9,7 +9,7 @@ export default {
     path: path.join(__dirname, "./migrations"),
     pattern: /^[\w-]+\d+\.[tj]s$/,
   },
-  dbName: "nkreddit",
+  dbName: "chair",
   // user: "nkreddituser",
   // password: "nkredditpassword",
   debug: !__prod__,
